@@ -17,14 +17,22 @@ public class Runigram {
 
 		// Creates an image which will be the result of various 
 		// image processing operations:
-		Color[][] imageOut;
+		Color[][] imageOut = read("ironman.ppm");
 
 		// Tests the horizontal flipping of an image:
-		imageOut = flippedVertically(tinypic);
-		System.out.println();
-		///print(imageOut);
-		///print(grayScaled(tinypic));
-		print(scaled(tinypic, 3, 5));
+		/// print(imageOut);
+		/// print(grayScaled(tinypic));
+		/// setCanvas(imageOut);
+		/// display((grayScaled(imageOut)));
+		/// print(scaled(tinypic, 3, 5));
+		/// display(scaled(tinypic, 3, 5));
+		/// Color c1 = new Color(100, 0, 0); 
+		/// Color c2 = new Color(0, 0, 100);
+		/// System.out.println(blend(c1, c2, 0.25));  
+
+		imageOut = scaled(imageOut, 342, 443); 
+		Color[][] imageIn = read("thor.ppm");
+		morph(imageOut, imageIn, 3); 
 		
 		//// Write here whatever code you need in order to test your work.
 		//// You can reuse / overide the contents of the imageOut array.
@@ -141,8 +149,8 @@ public class Runigram {
 		Double numRows = (double) image.length;
 		Double numCols = (double) image[0].length;  
  
-		Double hScale = numCols / height; 
-		Double wScale = numRows / width;
+		Double hScale = numRows / height; 
+		Double wScale = numCols / width;
 
 		//// next we will create a new image with our new given dimensions
 		Color[][] scaleImage = new Color[height][width];
@@ -167,10 +175,9 @@ public class Runigram {
 		//// we will need to create and return a new color, therefore we want to calculate it's rgb values
 		//// we will do that for each color separately, and then create a new color with our calculated values
 		int red = (int) (c1.getRed()  * alpha + (c2.getRed() * (1-alpha)));
-		int green = (int) (c1.getRed()  * alpha + (c2.getRed() * (1-alpha)));
-		int blue = (int) (c1.getRed()  * alpha + (c2.getRed() * (1-alpha)));
+		int green = (int) (c1.getGreen()  * alpha + (c2.getGreen() * (1-alpha)));
+		int blue = (int) (c1.getBlue()  * alpha + (c2.getBlue() * (1-alpha)));
 		Color blended = new Color(red, green, blue); 
-		//// Replace the following statement with your code
 		return blended;
 	}
 	
@@ -189,7 +196,6 @@ public class Runigram {
 				blended[i][j] = blend(image1[i][j], image2[i][j], alpha);
 			}
 		}
-		//// Replace the following statement with your code
 		return blended;
 	}
 
@@ -200,7 +206,13 @@ public class Runigram {
 	 * of the source image.
 	 */
 	public static void morph(Color[][] source, Color[][] target, int n) {
-		//// Replace this comment with your code
+		Color[][] scaledTarget = scaled(target, source[0].length, source.length);
+		double alpha = (n-1) / n; 
+		for (int i = 0; i <= n; i++) {
+			display(blend(source, scaledTarget, alpha*i));
+			StdDraw.pause(3000);
+		}
+
 	}
 	
 	/** Creates a canvas for the given image. */
