@@ -206,11 +206,13 @@ public class Runigram {
 	 * of the source image.
 	 */
 	public static void morph(Color[][] source, Color[][] target, int n) {
+		/// first the code scales the target picture to the same dimensions as the source
+		/// next we define our alpha, which is determined by the number of steps
+		/// finally we blend both images, using alpha * i in each iteration 
 		Color[][] scaledTarget = scaled(target, source[0].length, source.length);
 		double alpha = (n-1) / n; 
 		for (int i = 0; i <= n; i++) {
 			display(blend(source, scaledTarget, alpha*i));
-			StdDraw.pause(3000);
 		}
 
 	}
