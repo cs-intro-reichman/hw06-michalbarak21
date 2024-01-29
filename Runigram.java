@@ -22,7 +22,7 @@ public class Runigram {
 		// Tests the horizontal flipping of an image:
 		imageOut = flippedVertically(tinypic);
 		System.out.println();
-		///print(imageOut);
+		print(imageOut);
 		
 		//// Write here whatever code you need in order to test your work.
 		//// You can reuse / overide the contents of the imageOut array.
@@ -85,8 +85,7 @@ public class Runigram {
 				flipped[i][j] = image[i][(flipped[0].length-1)-j];
 			}
 		}
-		/// print(flipped);
-		return null;
+		return flipped;
 	}
 	
 	/**
@@ -102,15 +101,14 @@ public class Runigram {
 				flipped[i][j] = image[(flipped.length-1)-i][j];
 			}
 		}
-		print(flipped);
-		return null;
+		return flipped;
 	}
 	
 	// Computes the luminance of the RGB values of the given pixel, using the formula 
 	// lum = 0.299 * r + 0.587 * g + 0.114 * b, and returns a Color object consisting
 	// the three values r = lum, g = lum, b = lum.
 	public static Color luminance(Color pixel) {
-		//// Replace the following statement with your code
+		/// the function will need to return a 
 		return null;
 	}
 	
