@@ -22,7 +22,9 @@ public class Runigram {
 		// Tests the horizontal flipping of an image:
 		imageOut = flippedVertically(tinypic);
 		System.out.println();
-		print(imageOut);
+		///print(imageOut);
+		///print(grayScaled(tinypic));
+		print(scaled(tinypic, 3, 5));
 		
 		//// Write here whatever code you need in order to test your work.
 		//// You can reuse / overide the contents of the imageOut array.
@@ -108,16 +110,26 @@ public class Runigram {
 	// lum = 0.299 * r + 0.587 * g + 0.114 * b, and returns a Color object consisting
 	// the three values r = lum, g = lum, b = lum.
 	public static Color luminance(Color pixel) {
-		/// the function will need to return a 
-		return null;
+		/// first we will calculate the luminance value of our desired color using the formula
+		/// next we will create a new color in which the 3 rgb values are the luminance value we calculated before
+		Integer gsInteger =  (int) ((0.299 * pixel.getRed()) + (0.587 * pixel.getGreen() ) + ( 0.114 * pixel.getBlue())) ; 
+		Color gsColor = new Color(gsInteger ,gsInteger ,gsInteger );
+		return gsColor;
 	}
 	
 	/**
 	 * Returns an image which is the grayscaled version of the given image.
 	 */
 	public static Color[][] grayScaled(Color[][] image) {
-		//// Replace the following statement with your code
-		return null;
+		/// we will create a new image based on the original
+		/// our new image will use luminance replace the cell color in the original image with it's gray-scaled match
+		Color[][] graColors = new Color[image.length][image[0].length];
+		for (int i =0; i < graColors.length; i++) {
+			for (int j = 0; j < graColors[0].length; j++) {
+				graColors[i][j] = luminance(image[i][j]);
+			}
+		} 
+		return graColors;
 	}	
 	
 	/**
@@ -125,8 +137,24 @@ public class Runigram {
 	 * The image is scaled (resized) to have the given width and height.
 	 */
 	public static Color[][] scaled(Color[][] image, int width, int height) {
-		//// Replace the following statement with your code
-		return null;
+		//// first we will calculate our scaling parameters
+		Double numRows = (double) image.length;
+		Double numCols = (double) image[0].length;  
+ 
+		Double hScale = numCols / height; 
+		Double wScale = numRows / width;
+
+		//// next we will create a new image with our new given dimensions
+		Color[][] scaleImage = new Color[height][width];
+		System.out.println();
+		for (int i =0; i < scaleImage.length; i++) {
+			for (int j = 0; j < scaleImage[0].length; j++) {
+				Integer newHeight = (int)(i*hScale); 
+				Integer newWidth = (int)(j*wScale);
+				scaleImage[i][j] = image[newHeight][newWidth];
+			}
+		} 
+		return scaleImage;
 	}
 	
 	/**
@@ -136,8 +164,14 @@ public class Runigram {
 	 * values in the two input color.
 	 */
 	public static Color blend(Color c1, Color c2, double alpha) {
+		//// we will need to create and return a new color, therefore we want to calculate it's rgb values
+		//// we will do that for each color separately, and then create a new color with our calculated values
+		int red = (int) (c1.getRed()  * alpha + (c2.getRed() * (1-alpha)));
+		int green = (int) (c1.getRed()  * alpha + (c2.getRed() * (1-alpha)));
+		int blue = (int) (c1.getRed()  * alpha + (c2.getRed() * (1-alpha)));
+		Color blended = new Color(red, green, blue); 
 		//// Replace the following statement with your code
-		return null;
+		return blended;
 	}
 	
 	/**
@@ -147,8 +181,16 @@ public class Runigram {
 	 * The two images must have the same dimensions.
 	 */
 	public static Color[][] blend(Color[][] image1, Color[][] image2, double alpha) {
+		//// we will need to return a new image that is a blend of both images. Therefore we will create a new Color[][] object of the same dimensions
+		Color[][] blended = new Color[image1.length][image1[0].length];
+		//// now we will populate each cell of the new image with the blended cell of the 2 images
+		for (int i =0; i < blended.length; i++) {
+			for (int j = 0; j < blended[0].length; j++) {
+				blended[i][j] = blend(image1[i][j], image2[i][j], alpha);
+			}
+		}
 		//// Replace the following statement with your code
-		return null;
+		return blended;
 	}
 
 	/**
